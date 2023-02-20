@@ -20,13 +20,24 @@ def work_static_data():
     for table in STATIC_TABLES.keys():
         STATIC_TABLES[table]
 
-    pprint(STATIC_TABLES)
-
     # Loading data to db
     print("--------- INSERTS ---------")
 
     for table in STATIC_TABLES.keys():
         db.insert(STATIC_TABLES[table], table)
 
+def load_games():
+    schedule = transform.get_schedule()
 
-pprint(transform.get_schedule())
+    for game in schedule:
+        db.insert([game], 'games')
+
+def load_game_events(game_id):
+    events = transform.get_events(game_id)
+    db.insert(events, 'event')
+    return
+
+
+# load_game_events(2022010001)
+
+
