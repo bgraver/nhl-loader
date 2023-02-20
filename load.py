@@ -27,8 +27,12 @@ class DB:
         headers = dictionary[0].keys()
         insert_statement = "INSERT INTO {0}".format(table_name) + " ({}) VALUES %s".format(','.join(headers))
         values = [[value for value in column.values()] for column in dictionary]
-        execute_values(self.cursor, insert_statement, values)
-        return
+        try:
+            execute_values(self.cursor, insert_statement, values)
+        except psycopg2.Error as e:
+            print("Postgres Error: " + e.diag.primary_message)
+        finally:
+            return
 
     def close(self):
         self.cursor.close()

@@ -39,5 +39,3 @@ def load_game_events(game_id):
 
 
 # load_game_events(2022010001)
-
-
